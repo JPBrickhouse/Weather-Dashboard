@@ -8,13 +8,13 @@ function buildQueryURL () {
 
     var queryParameters = {"appid": "f5e728105e3af40a0f53311e5edbb7c8"};
 
-    queryParameters.q = "Chicago";
+    queryParameters.q = $("#cityInput").val().trim();
 
     console.log(queryURL + $.param(queryParameters));
     return(queryURL + $.param(queryParameters))
 }
 
-buildQueryURL();
+
 
 
 function generateFutureDates () {
@@ -32,18 +32,29 @@ function generateFutureDates () {
 
 function getWeatherData() {
 
-    // event.preventDefault();
-
     // Getting today's date
     var todayDate = moment().format('YYYY-MM-DD');
-
+    
     // Getting the next five dates after today
     var futureDays = generateFutureDates();
     
     console.log(todayDate);
     console.log(futureDays);
     
-
+    
 }
 
-getWeatherData();
+
+$("#searchButton").on("click", function(event) {
+    
+    event.preventDefault();
+    
+    var queryURL = buildQueryURL();
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(getWeatherData);
+});
+
+
