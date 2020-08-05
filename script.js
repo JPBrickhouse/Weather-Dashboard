@@ -17,14 +17,33 @@ function buildQueryURL () {
 buildQueryURL();
 
 
+function generateFutureDates () {
+    // Generating an array of the next five days after today
+    // Since the hottest temperature is usually at noon, I've appended 12:00:00
+    var todayDate = moment().format('YYYY-MM-DD');
+    futureDays = new Array(5);
+    for (i=0; i < futureDays.length; i++) {
+        newDate = moment(todayDate).add(i+1,"d").format('YYYY-MM-DD') + " 12:00:00";
+        futureDays[i] = newDate;
+    }
+    return futureDays;
+}
 
 
+function getWeatherData() {
 
-// function (event) {
+    // event.preventDefault();
 
-//     event.preventDefault();
+    // Getting today's date
+    var todayDate = moment().format('YYYY-MM-DD');
 
+    // Getting the next five dates after today
+    var futureDays = generateFutureDates();
+    
+    console.log(todayDate);
+    console.log(futureDays);
     
 
-// }
+}
 
+getWeatherData();
