@@ -58,7 +58,7 @@ function getWeather(weatherData) {
 
     // Initializing an array with an object in the first index
     // Corresponding to the value of #cityInput
-    var weatherArray = [{"City": $("#cityInput").val().trim()}];
+    var weatherArray = [{"city": $("#cityInput").val().trim()}];
 
     // CURRENT WEATHER
     var tempK = weatherData.current.temp;
@@ -94,9 +94,6 @@ function getWeather(weatherData) {
         weatherArray.push(futureWeather);
     }
     
-    // Console logging the full array of weather data
-    console.log(weatherArray);
-    
     // STORING IT IN LOCAL STORAGE FOR RECALL
     
     // Initializes an empty array
@@ -114,6 +111,15 @@ function getWeather(weatherData) {
         weatherArrayCurrent = JSON.parse(localStorage.getItem("weatherDataStorage"));
     }
 
+    // // Checking to see if a particular city already has data stored in the weatherArrayCurrent
+    // for (i=0; weatherArrayCurrent.length; i++) {
+    //     let weatherCheck = weatherArrayCurrent.find(weatherArrayCurrent => weatherArrayCurrent[i].city === $("#cityInput").val().trim());
+
+    //     console.log(weatherCheck);
+    // }
+
+
+
     // pushes the weatherArray array into the weatherArrayCurrent array
     weatherArrayCurrent.push(weatherArray);
 
@@ -127,13 +133,39 @@ function getWeather(weatherData) {
 
 function displayWeatherData() {
 
-    
+    var cityInQuestion = document.getElementById("cityOutput").getAttribute("data-name");
 
-    // Based on what the city name is in the upper part of the screen
-    // Display that data in the html
-    // Need to recall the object from local storage
-    
+    if (localStorage.getItem("weatherDataStorage") === null) {
+        return;
+    }
+    else {
+        var weatherArrayCurrent = JSON.parse(localStorage.getItem("weatherDataStorage"));
 
+        for (i=0; i < weatherArrayCurrent.length; i++) {
+
+            var elementPos = weatherArrayCurrent.map(function (weatherArrayCurrent) { return weatherArrayCurrent[i].city; }).indexOf(cityInQuestion);
+            
+            // var elementPos = weatherArrayCurrent.findIndex(obj => obj.city === cityInQuestion);
+            
+            console.log(elementPos);
+            var getWeatherData = weatherArrayCurrent[elementPos];
+            console.log(getWeatherData);
+        }
+
+
+        // console.log(getWeatherData[1].temperature);
+        // console.log(getWeatherData[1].humidPercent);
+        // console.log(getWeatherData[1].windSpeed);
+        // console.log(getWeatherData[1].uvIndex);
+
+        // Based on what the city name is in the upper part of the screen
+        // Display that data in the html
+        // Need to recall the object from local storage
+
+
+
+
+    }
 }
 
 
@@ -159,17 +191,18 @@ $("#searchButton").on("click", async function (event) {
     );
 
     // AJAX call to get the weather data
-    $.ajax({
+    await $.ajax({
         url: queryURLWeather,
         method: "GET"
     }).then(getWeather)
 
-    // Running the renderButtons function
-    renderButtons();
-
     // Set the city name in the upper part of the screen
     var cityInput = $("#cityInput").val().trim()
     document.getElementById("cityOutput").innerHTML = cityInput;
+    document.getElementById("cityOutput").setAttribute("data-name",cityInput);
+
+    // Running the renderButtons function
+    renderButtons();
 
     // Run the displayWeatherData function
     displayWeatherData();
