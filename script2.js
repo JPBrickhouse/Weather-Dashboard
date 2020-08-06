@@ -188,10 +188,10 @@ $("#searchButton").on("click", async function (event) {
         method: "GET"
     }).then(getWeather)
 
-    // Set cityInput based on the value in the search function
+    // Getting the value that was in the input search bar
     var cityInput = $("#cityInput").val().trim()
 
-    // Calling the setCityName function
+    // Calling the setCityName function using that value
     setCityName(cityInput);
 
     // Running the renderButtons function
@@ -245,7 +245,7 @@ function setCityFetchData(event) {
     // Getting the data-name attribute from this button (whatever button was clicked)
     var cityInput = $(this).attr("data-name");
 
-    // Calling the setCityName function
+    // Calling the setCityName function using that attribute
     setCityName(cityInput);
 
     // Run the displayWeatherData function
