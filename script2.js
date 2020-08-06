@@ -56,66 +56,68 @@ async function buildWeatherQueryURL() {
     return (queryURL + $.param(queryParameters))
 }
 
-
-// Generating an array of the next five days after today
-// Since the hottest temperature is usually at noon, I've appended 12:00:00
-function generateFutureDates() {
-    var todayDate = moment().format('YYYY-MM-DD');
-    futureDays = new Array(5);
-    for (i = 0; i < futureDays.length; i++) {
-        newDate = moment(todayDate).add(i + 1, "d").format('YYYY-MM-DD') + " 12:00:00";
-        futureDays[i] = newDate;
-    }
-    return futureDays;
-}
-
-
+// Getting the weather data
 function getWeather(weatherData) {
 
-    // console.log(weatherData);
-
-    // Getting today's date
-    var todayDate = moment().format('YYYY-MM-DD');
+    // Initializing an empty array
+    var weatherArray = [{"City": "Chicago"}];
 
     // CURRENT WEATHER
-
-
     var tempK = weatherData.current.temp;
     tempF = ((tempK - 273.15) * 1.8) + 32;
-    tempC = (tempK - 273.15);
+    tempF = tempF.toFixed(2);
 
-    var humidPercent = weatherData.current.humidity;
-
-    var windSpeed = weatherData.current.wind_speed;
-
-    var uvIndex = weatherData.current.uvi;
-
-    console.log(tempF);
-    console.log(humidPercent);
-    console.log(windSpeed);
-    console.log(uvIndex);
-
+    // Pushing an object into the empty array
+    weatherArray.push({
+        date: moment().format('YYYY-MM-DD'),
+        temperature: tempF,
+        humidPercent: weatherData.current.humidity,
+        windSpeed: weatherData.current.wind_speed,
+        uvIndex: weatherData.current.uvi,
+    });
 
     // FUTURE WEATHER
+    for (i = 0; i < 5; i++) {
+        var tempK = weatherData.daily[i].temp.max;
+        tempF = ((tempK - 273.15) * 1.8) + 32;
+        tempF = tempF.toFixed(2);
 
-    for (i = 0; i < 4; i++) {
-
-
-        {
-            humidPercent: weatherData.daily[i].humidity;
-
-            windSpeed: weatherData.daily[i].wind_speed;
-
-            uvIndex: weatherData.daily[i].uvi;
+        // Pushing objects into the empty array for each day of data
+        var futureWeather = {
+            date: moment().add(i+1,"d").format('YYYY-MM-DD'),
+            temperature: tempF,
+            humidPercent: weatherData.daily[i].humidity,
+            windSpeed: weatherData.daily[i].wind_speed,
+            uvIndex: weatherData.daily[i].uvi,
         }
-        
 
+        weatherArray.push(futureWeather);
     }
+    console.log(weatherArray);
+    
 
+    // STORING IT IN LOCAL STORAGE FOR RECALL
+    // (Recall it using the displayWeather function)
 
-    // STORE EVERYTHING IN LOCAL STORAGE
 
 }
+
+
+
+// DISPLAYING THE WEATHER FUNCTION
+
+// Need to recall the object from local storage
+
+// Based on what the city name is in the upper part of the screen
+// Display that data in the html
+
+
+
+
+
+
+
+
 
 
 
@@ -124,23 +126,42 @@ $("#searchButton").on("click", async function (event) {
 
     event.preventDefault();
 
+    // Generating the queryURLWeather for use in the AJAX call
     // Awaiting the return from buildWeatherQueryURL() prior to continuing the rest of the function called on the button click
     // The .catch() afterwards is catching if there is an error in the return of the buildWeatherQueryURL() function (and console logging that error)
     var queryURLWeather = await buildWeatherQueryURL()
-        .catch(function(error) {
-            console.log(error)
-        });
+    .catch(function(error) {
+        console.log(error)
+        }
+    );
 
+    // AJAX call to get the weather data
     $.ajax({
         url: queryURLWeather,
         method: "GET"
     }).then(getWeather)
 
+
+
+
     // Add a button with the city name
     // Append it to the search history list
-
     // var cityName = $("#cityInput").val().trim();
+
+
+
+
+    // Set the city name in the upper part of the screen
+    // Run the displayWeather function
+    // (That displayWeather function functions based on what the city name is in the upper part of the screen
 
 });
 
 
+
+
+// Event listener for all the lower buttons in the search history list
+// When a button is clicked, look for its ID
+// Use that ID to set the city name in the upper part of the screen
+// Then run the displayWeather function
+// (That displayWeather function functions based on what the city name is in the upper part of the screen
