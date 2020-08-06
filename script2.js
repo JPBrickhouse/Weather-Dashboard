@@ -149,6 +149,7 @@ function displayWeatherData() {
 
     // Current Weather
     console.log(getWeatherData[0].city);
+    console.log(getWeatherData[1].date);
     console.log(getWeatherData[1].temperature);
     console.log(getWeatherData[1].weatherIcon);
     console.log(getWeatherData[1].humidPercent);
@@ -157,6 +158,7 @@ function displayWeatherData() {
 
     // Future Weather
     for (i=2; i <=6; i++) {
+        console.log(getWeatherData[i].date);
         console.log(getWeatherData[i].temperature);
         console.log(getWeatherData[i].weatherIcon);
         console.log(getWeatherData[i].humidPercent);
