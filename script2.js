@@ -34,7 +34,6 @@ function geocoding() {
 // Building the queryURL to get the weather data
 // We make the function async
 async function buildWeatherQueryURL() {
-
     var queryURL = "https://api.openweathermap.org/data/2.5/onecall?";
 
     var queryParameters = { "appid": "f5e728105e3af40a0f53311e5edbb7c8" };
@@ -126,12 +125,16 @@ function getWeather(weatherData) {
 
 // DISPLAYING THE WEATHER FUNCTION
 
-// Need to recall the object from local storage
+function displayWeatherData() {
 
-// Based on what the city name is in the upper part of the screen
-// Display that data in the html
+    
 
+    // Based on what the city name is in the upper part of the screen
+    // Display that data in the html
+    // Need to recall the object from local storage
+    
 
+}
 
 
 
@@ -168,15 +171,8 @@ $("#searchButton").on("click", async function (event) {
     var cityInput = $("#cityInput").val().trim()
     document.getElementById("cityOutput").innerHTML = cityInput;
 
-
-
-
-    // Run the displayWeather function
-    // (That displayWeather function functions based on what the city name is in the upper part of the screen
-
-
-
-
+    // Run the displayWeatherData function
+    displayWeatherData();
 });
 
 
@@ -211,11 +207,22 @@ function renderButtons () {
 }
 
 
+// Event listener for all the buttons in the search history list
+// Looking for buttons with the class historyButton
+// When the button is clicked, run the setButtonFetchData function
+$(document).on("click",".historyButton",setCityFetchData);
 
-// Event listener for all the lower buttons in the search history list
-// When a button is clicked
-// that has class historyButton
-// look for its data-name
-// Use that ID to set the city name in the upper part of the screen
-// Then run the displayWeather function
-// (That displayWeather function functions based on what the city name is in the upper part of the screen
+function setCityFetchData (event) {
+
+    event.preventDefault();
+
+    // Getting the data-name attribute from the this button (whatever button was clicked)
+    var cityInput = $(this).attr("data-name");
+
+    // Set the city name in the upper part of the screen
+    document.getElementById("cityOutput").innerHTML = cityInput;
+
+    // Run the displayWeatherData function
+    displayWeatherData();
+}
+
