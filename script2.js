@@ -70,6 +70,7 @@ function getWeather(weatherData) {
     weatherArray.push({
         date: moment().format('YYYY-MM-DD'),
         temperature: tempF,
+        weatherIcon: weatherData.current.weather[0].icon,
         humidPercent: weatherData.current.humidity,
         windSpeed: weatherData.current.wind_speed,
         uvIndex: weatherData.current.uvi,
@@ -86,6 +87,7 @@ function getWeather(weatherData) {
         var futureWeather = {
             date: moment().add(i + 1, "d").format('YYYY-MM-DD'),
             temperature: tempF,
+            weatherIcon: weatherData.daily[i].weather[0].icon,
             humidPercent: weatherData.daily[i].humidity,
             windSpeed: weatherData.daily[i].wind_speed,
             uvIndex: weatherData.daily[i].uvi,
@@ -146,13 +148,21 @@ function displayWeatherData() {
     var getWeatherData = weatherArrayCurrent[elementPosition];
 
     // Current Weather
+    console.log(getWeatherData[0].city);
     console.log(getWeatherData[1].temperature);
+    console.log(getWeatherData[1].weatherIcon);
     console.log(getWeatherData[1].humidPercent);
     console.log(getWeatherData[1].windSpeed);
     console.log(getWeatherData[1].uvIndex);
 
     // Future Weather
-
+    for (i=2; i <=6; i++) {
+        console.log(getWeatherData[i].temperature);
+        console.log(getWeatherData[i].weatherIcon);
+        console.log(getWeatherData[i].humidPercent);
+        console.log(getWeatherData[i].windSpeed);
+        console.log(getWeatherData[i].uvIndex);    
+    }
 
 
 
