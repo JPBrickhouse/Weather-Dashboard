@@ -5,30 +5,31 @@
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    
+
     <title>WheTHEr, THE Weather App</title>
-    
+
     <!-- My own css styles -->
     <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
-    
+
     <!-- Bootstrap styles -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css"
+        integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
 </head>
 
 <body>
-    
+
     <div class="container">
 
         <div class="row d-flex justify-content-center">
             <h1>WheTHEr, THE Weather App for all your Forecast Needs!</h1>
         </div>
-            
+
 
         <div class="row">
 
             <div class="col-md-3">
-                
-                <div class = "row">
+
+                <div class="row">
                     <h3>Search for a city</h3>
                 </div>
                 <div class="row">
@@ -46,25 +47,97 @@
 
 
             </div>
-            
-            
-            
-            <div class="col-md-9">
-                
-                <!-- div -->
-                <!-- City Name --> <!-- Date -->
-                <!-- Current Temperature -->
-                <!-- Current Humidity -->
-                <!-- Current UV Index AND color coded response -->                
 
-                <!-- div -->
-                <!-- 5 day forecast title -->
-                <!-- little cards for each day of data -->
-                <!-- same data as above, but for a new date -->
+
+
+            <div class="col-md-9">
+
+                <!-- Displaying the Current Weather -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>City: <span id="cityOutput"></span></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Current Date --> Date
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Current Humidity --> Humid
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Current Wind Speed --> Wind
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Current UV Index --> UV
+                    </div>
+                </div>
+
+
+
+                <!-- Displaying the Forecasted Weather-->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Future Date</h5>
+                                <p class="card-text">Future Image</p>
+                                <p class="card-text">Future Temp</p>
+                                <p class="card-text">Future Humidity</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Future Date</h5>
+                                <p class="card-text">Future Image</p>
+                                <p class="card-text">Future Temp</p>
+                                <p class="card-text">Future Humidity</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Future Date</h5>
+                                <p class="card-text">Future Image</p>
+                                <p class="card-text">Future Temp</p>
+                                <p class="card-text">Future Humidity</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Future Date</h5>
+                                <p class="card-text">Future Image</p>
+                                <p class="card-text">Future Temp</p>
+                                <p class="card-text">Future Humidity</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Future Date</h5>
+                                <p class="card-text">Future Image</p>
+                                <p class="card-text">Future Temp</p>
+                                <p class="card-text">Future Humidity</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
             </div>
-            
+
         </div>
 
 
@@ -83,8 +156,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
     <!-- My own javascript -->
     <script src='script2.js'></script>
 

@@ -169,9 +169,12 @@ $("#searchButton").on("click", async function (event) {
     // var cityName = $("#cityInput").val().trim();
 
 
-
+    
 
     // Set the city name in the upper part of the screen
+    var cityInput = $("#cityInput").val().trim()
+    document.getElementById("cityOutput").innerHTML = cityInput;
+
     // Run the displayWeather function
     // (That displayWeather function functions based on what the city name is in the upper part of the screen
 
