@@ -1,7 +1,5 @@
 
 // Building the queryURL to get the geocoding data
-
-
 function buildGeoCodeQueryURL() {
     var queryURL = "https://api.opencagedata.com/geocode/v1/json?"
 
@@ -15,7 +13,7 @@ function buildGeoCodeQueryURL() {
     return (queryURL + $.param(queryParameters))
 }
 
-// GeoCoding Function
+// GeoCoding Function to get the latitude and longitude
 function geocoding() {
 
     var queryURLgeocoding = buildGeoCodeQueryURL();
@@ -59,8 +57,9 @@ async function buildWeatherQueryURL() {
 // Getting the weather data
 function getWeather(weatherData) {
 
-    // Initializing an empty array
-    var weatherArray = [{"City": "Chicago"}];
+    // Initializing an array with an object in the first index
+    // Corresponding to the value of #cityInput
+    var weatherArray = [{"City": $("#cityInput").val().trim()}];
 
     // CURRENT WEATHER
     var tempK = weatherData.current.temp;
@@ -68,6 +67,7 @@ function getWeather(weatherData) {
     tempF = tempF.toFixed(2);
 
     // Pushing an object into the empty array
+    // This object corresopnds to the current weather
     weatherArray.push({
         date: moment().format('YYYY-MM-DD'),
         temperature: tempF,
@@ -77,12 +77,13 @@ function getWeather(weatherData) {
     });
 
     // FUTURE WEATHER
+    // Looping through 5 days of future forecast
     for (i = 0; i < 5; i++) {
         var tempK = weatherData.daily[i].temp.max;
         tempF = ((tempK - 273.15) * 1.8) + 32;
         tempF = tempF.toFixed(2);
 
-        // Pushing objects into the empty array for each day of data
+        // These objects correspond to the forecasted weather for each day
         var futureWeather = {
             date: moment().add(i+1,"d").format('YYYY-MM-DD'),
             temperature: tempF,
@@ -90,16 +91,35 @@ function getWeather(weatherData) {
             windSpeed: weatherData.daily[i].wind_speed,
             uvIndex: weatherData.daily[i].uvi,
         }
-
+        // Pushing objects into the array for each day of data
         weatherArray.push(futureWeather);
     }
+    
+    // Console logging the full array of weather data
     console.log(weatherArray);
     
-
     // STORING IT IN LOCAL STORAGE FOR RECALL
-    // (Recall it using the displayWeather function)
+    
+    // Initializes an empty array
+    var weatherArrayCurrent = [];
 
+    // if the weatherDataStorage in localStorage is null,
+    // then use the empty array initialized earlier
+    if (localStorage.getItem("weatherDataStorage") === null ) {
+        weatherArrayCurrent;
+    }
+    // else: this means that weatherDataStorage has values
+    // Therefore, use getItem to get the weatherDataStorage array from localStorage
+    // and make that array as the weatherArrayCurrent array
+    else {
+        weatherArrayCurrent = JSON.parse(localStorage.getItem("weatherDataStorage"));
+    }
 
+    // pushes the weatherArray array into the weatherArrayCurrent array
+    weatherArrayCurrent.push(weatherArray);
+
+    // sets that overall array as the new version of the array in localStorage
+    localStorage.setItem("weatherDataStorage", JSON.stringify(weatherArrayCurrent));
 }
 
 
