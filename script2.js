@@ -188,10 +188,11 @@ $("#searchButton").on("click", async function (event) {
         method: "GET"
     }).then(getWeather)
 
-    // Set the city name in the upper part of the screen
+    // Set cityInput based on the value in the search function
     var cityInput = $("#cityInput").val().trim()
-    document.getElementById("cityOutput").innerHTML = cityInput;
-    document.getElementById("cityOutput").setAttribute("data-name", cityInput);
+
+    // Calling the setCityName function
+    setCityName(cityInput);
 
     // Running the renderButtons function
     renderButtons();
@@ -241,13 +242,19 @@ function setCityFetchData(event) {
 
     event.preventDefault();
 
-    // Getting the data-name attribute from the this button (whatever button was clicked)
+    // Getting the data-name attribute from this button (whatever button was clicked)
     var cityInput = $(this).attr("data-name");
 
-    // Set the city name in the upper part of the screen
-    document.getElementById("cityOutput").innerHTML = cityInput;
+    // Calling the setCityName function
+    setCityName(cityInput);
 
     // Run the displayWeatherData function
     displayWeatherData();
 }
 
+
+// Set the city name in the upper part of the screen
+function setCityName (cityInput) {
+    document.getElementById("cityOutput").innerHTML = cityInput;
+    document.getElementById("cityOutput").setAttribute("data-name", cityInput);
+}
