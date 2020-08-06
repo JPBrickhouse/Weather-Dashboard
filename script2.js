@@ -58,7 +58,7 @@ function getWeather(weatherData) {
 
     // Initializing an array with an object in the first index
     // Corresponding to the value of #cityInput
-    var weatherArray = [{"city": $("#cityInput").val().trim()}];
+    var weatherArray = [{ "city": $("#cityInput").val().trim() }];
 
     // CURRENT WEATHER
     var tempK = weatherData.current.temp;
@@ -84,7 +84,7 @@ function getWeather(weatherData) {
 
         // These objects correspond to the forecasted weather for each day
         var futureWeather = {
-            date: moment().add(i+1,"d").format('YYYY-MM-DD'),
+            date: moment().add(i + 1, "d").format('YYYY-MM-DD'),
             temperature: tempF,
             humidPercent: weatherData.daily[i].humidity,
             windSpeed: weatherData.daily[i].wind_speed,
@@ -93,15 +93,15 @@ function getWeather(weatherData) {
         // Pushing objects into the array for each day of data
         weatherArray.push(futureWeather);
     }
-    
+
     // STORING IT IN LOCAL STORAGE FOR RECALL
-    
+
     // Initializes an empty array
     var weatherArrayCurrent = [];
 
     // if the weatherDataStorage in localStorage is null,
     // then use the empty array initialized earlier
-    if (localStorage.getItem("weatherDataStorage") === null ) {
+    if (localStorage.getItem("weatherDataStorage") === null) {
         weatherArrayCurrent;
     }
     // else: this means that weatherDataStorage has values
@@ -111,15 +111,6 @@ function getWeather(weatherData) {
         weatherArrayCurrent = JSON.parse(localStorage.getItem("weatherDataStorage"));
     }
 
-    // // Checking to see if a particular city already has data stored in the weatherArrayCurrent
-    // for (i=0; weatherArrayCurrent.length; i++) {
-    //     let weatherCheck = weatherArrayCurrent.find(weatherArrayCurrent => weatherArrayCurrent[i].city === $("#cityInput").val().trim());
-
-    //     console.log(weatherCheck);
-    // }
-
-
-
     // pushes the weatherArray array into the weatherArrayCurrent array
     weatherArrayCurrent.push(weatherArray);
 
@@ -128,44 +119,45 @@ function getWeather(weatherData) {
 }
 
 
-
 // DISPLAYING THE WEATHER FUNCTION
-
+// Based on what the city name is in the upper part of the screen
+// Display that data in the html
+// Need to recall the object from local storage
 function displayWeatherData() {
 
     var cityInQuestion = document.getElementById("cityOutput").getAttribute("data-name");
 
-    if (localStorage.getItem("weatherDataStorage") === null) {
-        return;
+    var weatherArrayCurrent = JSON.parse(localStorage.getItem("weatherDataStorage"));
+
+    var getWeatherData = null;
+
+    var elementPosition = null;
+
+    for (i = 0; i < weatherArrayCurrent.length; i++) {
+
+        weatherArrayCurrent[i].forEach((Obj) => {
+            if (Obj.city === cityInQuestion) {
+                elementPosition=i;
+                console.log(elementPosition);
+            }
+        })
     }
-    else {
-        var weatherArrayCurrent = JSON.parse(localStorage.getItem("weatherDataStorage"));
 
-        for (i=0; i < weatherArrayCurrent.length; i++) {
+    var getWeatherData = weatherArrayCurrent[elementPosition];
 
-            var elementPos = weatherArrayCurrent.map(function (weatherArrayCurrent) { return weatherArrayCurrent[i].city; }).indexOf(cityInQuestion);
-            
-            // var elementPos = weatherArrayCurrent.findIndex(obj => obj.city === cityInQuestion);
-            
-            console.log(elementPos);
-            var getWeatherData = weatherArrayCurrent[elementPos];
-            console.log(getWeatherData);
-        }
+    // Current Weather
+    console.log(getWeatherData[1].temperature);
+    console.log(getWeatherData[1].humidPercent);
+    console.log(getWeatherData[1].windSpeed);
+    console.log(getWeatherData[1].uvIndex);
 
-
-        // console.log(getWeatherData[1].temperature);
-        // console.log(getWeatherData[1].humidPercent);
-        // console.log(getWeatherData[1].windSpeed);
-        // console.log(getWeatherData[1].uvIndex);
-
-        // Based on what the city name is in the upper part of the screen
-        // Display that data in the html
-        // Need to recall the object from local storage
+    // Future Weather
 
 
 
 
-    }
+
+
 }
 
 
@@ -185,10 +177,10 @@ $("#searchButton").on("click", async function (event) {
     // Awaiting the return from buildWeatherQueryURL() prior to continuing the rest of the function called on the button click
     // The .catch() afterwards is catching if there is an error in the return of the buildWeatherQueryURL() function (and console logging that error)
     var queryURLWeather = await buildWeatherQueryURL()
-    .catch(function(error) {
-        console.log(error)
+        .catch(function (error) {
+            console.log(error)
         }
-    );
+        );
 
     // AJAX call to get the weather data
     await $.ajax({
@@ -199,7 +191,7 @@ $("#searchButton").on("click", async function (event) {
     // Set the city name in the upper part of the screen
     var cityInput = $("#cityInput").val().trim()
     document.getElementById("cityOutput").innerHTML = cityInput;
-    document.getElementById("cityOutput").setAttribute("data-name",cityInput);
+    document.getElementById("cityOutput").setAttribute("data-name", cityInput);
 
     // Running the renderButtons function
     renderButtons();
@@ -210,7 +202,7 @@ $("#searchButton").on("click", async function (event) {
 
 
 // Add a button with the city name to the search history
-function renderButtons () {
+function renderButtons() {
 
     // Getting the city name
     var cityName = $("#cityInput").val().trim();
@@ -224,8 +216,8 @@ function renderButtons () {
     // Generating the button and adding classes, attributes, and text
     var searchHistoryButton = $("<button>");
     searchHistoryButton.addClass("btn btn-outline-dark btn-block historyButton");
-    searchHistoryButton.attr("type","button")
-    searchHistoryButton.attr("data-name",cityName);
+    searchHistoryButton.attr("type", "button")
+    searchHistoryButton.attr("data-name", cityName);
     searchHistoryButton.text(cityName);
 
     // Appending the button to the column element
@@ -243,9 +235,9 @@ function renderButtons () {
 // Event listener for all the buttons in the search history list
 // Looking for buttons with the class historyButton
 // When the button is clicked, run the setButtonFetchData function
-$(document).on("click",".historyButton",setCityFetchData);
+$(document).on("click", ".historyButton", setCityFetchData);
 
-function setCityFetchData (event) {
+function setCityFetchData(event) {
 
     event.preventDefault();
 
