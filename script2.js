@@ -161,30 +161,61 @@ $("#searchButton").on("click", async function (event) {
         method: "GET"
     }).then(getWeather)
 
-
-
-
-    // Add a button with the city name
-    // Append it to the search history list
-    // var cityName = $("#cityInput").val().trim();
-
-
-    
+    // Running the renderButtons function
+    renderButtons();
 
     // Set the city name in the upper part of the screen
     var cityInput = $("#cityInput").val().trim()
     document.getElementById("cityOutput").innerHTML = cityInput;
 
+
+
+
     // Run the displayWeather function
     // (That displayWeather function functions based on what the city name is in the upper part of the screen
+
+
+
 
 });
 
 
+// Add a button with the city name to the search history
+function renderButtons () {
+
+    // Getting the city name
+    var cityName = $("#cityInput").val().trim();
+
+    // Creating an div element row
+    var historyButtonDiv = $("<div class='row'>");
+
+    // Creating a div element column
+    var historyColumn = $("<div class='col md-12'>")
+
+    // Generating the button and adding classes, attributes, and text
+    var searchHistoryButton = $("<button>");
+    searchHistoryButton.addClass("btn btn-outline-dark btn-block historyButton");
+    searchHistoryButton.attr("type","button")
+    searchHistoryButton.attr("data-name",cityName);
+    searchHistoryButton.text(cityName);
+
+    // Appending the button to the column element
+    historyColumn.append(searchHistoryButton)
+
+    // Appending the column element to the row
+    historyButtonDiv.append(historyColumn);
+
+    // Prepending the row element above any previous rows
+    // (Located wherever we find the #searchHistory ID div)
+    $("#searchHistory").prepend(historyButtonDiv);
+}
+
 
 
 // Event listener for all the lower buttons in the search history list
-// When a button is clicked, look for its ID
+// When a button is clicked
+// that has class historyButton
+// look for its data-name
 // Use that ID to set the city name in the upper part of the screen
 // Then run the displayWeather function
 // (That displayWeather function functions based on what the city name is in the upper part of the screen
