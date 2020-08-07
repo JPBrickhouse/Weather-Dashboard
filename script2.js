@@ -149,7 +149,7 @@ function displayWeatherData() {
         // if the city in the object corresponds to cityInQuestion, log that elementPosition
         weatherArrayCurrent[i].forEach((Obj) => {
             if (Obj.city === cityInQuestion) {
-                elementPosition=i;
+                elementPosition = i;
             }
         })
     }
@@ -163,18 +163,18 @@ function displayWeatherData() {
 
     // Setting the URL for the weather icon to be used
     weatherIconURL = "http://openweathermap.org/img/wn/" + getWeatherData[1].weatherIcon + "@2x.png"
-    
+
     // Displaying all the current weather content on the page
     document.getElementById("date1").innerHTML = "Date: " + getWeatherData[1].date;
-    document.getElementById("icon1").setAttribute("src",weatherIconURL);
-    document.getElementById("icon1").setAttribute("alt","Weather Icon");
+    document.getElementById("icon1").setAttribute("src", weatherIconURL);
+    document.getElementById("icon1").setAttribute("alt", "Weather Icon");
     document.getElementById("temp1").innerHTML = "Temperature: " + getWeatherData[1].temperature + "&#176; F";
     document.getElementById("humid1").innerHTML = "Humidity: " + getWeatherData[1].humidPercent + " %"
     document.getElementById("wind1").innerHTML = "Wind Speed: " + getWeatherData[1].windSpeed + " mph"
     document.getElementById("uv1").innerHTML = "UV Index: " + getWeatherData[1].uvIndex
 
     // Future Weather
-    for (var i=2; i <=6; i++) {
+    for (var i = 2; i <= 6; i++) {
 
         // Setting variables to correspond to IDs used in the html
         var outputDate = "date" + i;
@@ -186,9 +186,9 @@ function displayWeatherData() {
         weatherIconURL = "http://openweathermap.org/img/wn/" + getWeatherData[i].weatherIcon + "@2x.png"
 
         // Displaying all the forecasted weather content on the page
-        document.getElementById(outputDate).innerHTML = getWeatherData[i].date        
-        document.getElementById(outputIcon).setAttribute("src",weatherIconURL);
-        document.getElementById(outputIcon).setAttribute("alt","Weather Icon");
+        document.getElementById(outputDate).innerHTML = getWeatherData[i].date
+        document.getElementById(outputIcon).setAttribute("src", weatherIconURL);
+        document.getElementById(outputIcon).setAttribute("alt", "Weather Icon");
         document.getElementById(outputTemp).innerHTML = getWeatherData[i].temperature + "&#176; F"
         document.getElementById(outputHumid).innerHTML = getWeatherData[i].humidPercent + " %"
     }
@@ -281,10 +281,45 @@ function setCityFetchData(event) {
 
 
 // Set the city name in the upper part of the screen
-function setCityName (cityInput) {
+function setCityName(cityInput) {
     document.getElementById("cityOutput").innerHTML = cityInput;
     document.getElementById("cityOutput").setAttribute("data-name", cityInput);
 }
 
 
+function lastSearchDisplayed() {
 
+    // Initializes an empty array
+    var weatherArrayCurrent = [];
+
+    // if the weatherDataStorage in localStorage is null,
+    // then do nothing
+    if (localStorage.getItem("weatherDataStorage") === null) {
+        return;
+    }
+    // else: this means that weatherDataStorage has values
+    // Therefore, use getItem to get the weatherDataStorage array from localStorage
+    // and make that array as the weatherArrayCurrent array
+    else {
+        weatherArrayCurrent = JSON.parse(localStorage.getItem("weatherDataStorage"));
+
+        var arrayLength = weatherArrayCurrent.length
+
+        var lastIndex = arrayLength-1;
+
+        var cityOutput = "";
+        
+        weatherArrayCurrent[lastIndex].forEach((Obj) => {
+            if (Obj.city) {
+                cityOutput = Obj.city;
+            }
+        });
+
+        document.getElementById("cityOutput").setAttribute("data-name", cityOutput);
+    }
+
+    displayWeatherData();
+}
+
+
+lastSearchDisplayed();
