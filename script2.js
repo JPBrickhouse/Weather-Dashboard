@@ -1,4 +1,5 @@
 
+
 // Building the queryURL to get the geocoding data
 function buildGeoCodeQueryURL() {
     var queryURL = "https://api.opencagedata.com/geocode/v1/json?"
@@ -12,6 +13,7 @@ function buildGeoCodeQueryURL() {
     console.log(queryURL + $.param(queryParameters));
     return (queryURL + $.param(queryParameters))
 }
+
 
 // GeoCoding Function to get the latitude and longitude
 function geocoding() {
@@ -30,6 +32,7 @@ function geocoding() {
         return coordinates;
     }))
 }
+
 
 // Building the queryURL to get the weather data
 // We make the function async
@@ -52,6 +55,7 @@ async function buildWeatherQueryURL() {
     console.log(queryURL + $.param(queryParameters));
     return (queryURL + $.param(queryParameters))
 }
+
 
 // Getting the weather data
 function getWeather(weatherData) {
@@ -126,36 +130,48 @@ function getWeather(weatherData) {
 // Display that data in the html
 function displayWeatherData() {
 
+    // Getting the city name from the upper part of the screen
+    // Setting is as a variable called cityInQuestion
     var cityInQuestion = document.getElementById("cityOutput").getAttribute("data-name");
 
+    // Getting all the weather data from localStorage
+    // Storing it in an array
     var weatherArrayCurrent = JSON.parse(localStorage.getItem("weatherDataStorage"));
 
+    // Initializing two null variables for future uses
     var getWeatherData = null;
-
     var elementPosition = null;
 
+    // Going through the weatherArrayCurrent with a for loop
     for (var i = 0; i < weatherArrayCurrent.length; i++) {
 
+        // Using forEach to search through weatherArrayCurrent
+        // if the city in the object corresponds to cityInQuestion, log that elementPosition
         weatherArrayCurrent[i].forEach((Obj) => {
             if (Obj.city === cityInQuestion) {
                 elementPosition=i;
-                console.log(elementPosition);
             }
         })
     }
 
-
-
+    // Using the elementPosition determined earlier, use that as the index
+    // Go into the weatherArrayCurrent at that index
+    // Stored that information as getWeather Data
     var getWeatherData = weatherArrayCurrent[elementPosition];
 
-    // Current Weather
-    console.log(getWeatherData[0].city);
-    console.log(getWeatherData[1].date);
-    console.log(getWeatherData[1].temperature);
-    console.log(getWeatherData[1].weatherIcon);
-    console.log(getWeatherData[1].humidPercent);
-    console.log(getWeatherData[1].windSpeed);
-    console.log(getWeatherData[1].uvIndex);
+    // CURRENT WEATHER
+
+    // Setting the URL for the weather icon to be used
+    weatherIconURL = "http://openweathermap.org/img/wn/" + getWeatherData[1].weatherIcon + "@2x.png"
+    
+    // Displaying all the current weather content on the page
+    document.getElementById("date1").innerHTML = "Date: " + getWeatherData[1].date;
+    document.getElementById("icon1").setAttribute("src",weatherIconURL);
+    document.getElementById("icon1").setAttribute("alt","Weather Icon");
+    document.getElementById("temp1").innerHTML = "Temperature: " + getWeatherData[1].temperature + "&#176; F";
+    document.getElementById("humid1").innerHTML = "Humidity: " + getWeatherData[1].humidPercent + " %"
+    document.getElementById("wind1").innerHTML = "Wind Speed: " + getWeatherData[1].windSpeed + " mph"
+    document.getElementById("uv1").innerHTML = "UV Index: " + getWeatherData[1].uvIndex
 
     // Future Weather
     for (var i=2; i <=6; i++) {
@@ -269,3 +285,6 @@ function setCityName (cityInput) {
     document.getElementById("cityOutput").innerHTML = cityInput;
     document.getElementById("cityOutput").setAttribute("data-name", cityInput);
 }
+
+
+

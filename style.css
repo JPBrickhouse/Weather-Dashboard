@@ -11,10 +11,25 @@
     border-width: medium;
 }
 
+.card-body {
+    background-color: lightblue;
+}
+
+#currentWeather {
+    border-style:solid;
+    border-width: thin;
+    background-color: white;
+}
+
+#currentWeather, #forecastWeather, #searchBarColumn {
+    padding: 5px;
+    margin: 5px;
+}
+
 #searchButton {
     background-color: lightblue;
 }
 
-.card-body {
-    background-color: lightblue;
+#cityOutput {
+    font-weight: bold;
 }
