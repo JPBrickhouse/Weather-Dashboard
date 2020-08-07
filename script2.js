@@ -78,7 +78,7 @@ function getWeather(weatherData) {
 
     // FUTURE WEATHER
     // Looping through 5 days of future forecast
-    for (i = 0; i < 5; i++) {
+    for (var i = 0; i < 5; i++) {
         var tempK = weatherData.daily[i].temp.max;
         tempF = ((tempK - 273.15) * 1.8) + 32;
         tempF = tempF.toFixed(2);
@@ -124,7 +124,6 @@ function getWeather(weatherData) {
 // DISPLAYING THE WEATHER FUNCTION
 // Based on what the city name is in the upper part of the screen
 // Display that data in the html
-// Need to recall the object from local storage
 function displayWeatherData() {
 
     var cityInQuestion = document.getElementById("cityOutput").getAttribute("data-name");
@@ -135,7 +134,7 @@ function displayWeatherData() {
 
     var elementPosition = null;
 
-    for (i = 0; i < weatherArrayCurrent.length; i++) {
+    for (var i = 0; i < weatherArrayCurrent.length; i++) {
 
         weatherArrayCurrent[i].forEach((Obj) => {
             if (Obj.city === cityInQuestion) {
@@ -144,6 +143,8 @@ function displayWeatherData() {
             }
         })
     }
+
+
 
     var getWeatherData = weatherArrayCurrent[elementPosition];
 
@@ -157,27 +158,25 @@ function displayWeatherData() {
     console.log(getWeatherData[1].uvIndex);
 
     // Future Weather
-    for (i=2; i <=6; i++) {
-        console.log(getWeatherData[i].date);
-        console.log(getWeatherData[i].temperature);
-        console.log(getWeatherData[i].weatherIcon);
-        console.log(getWeatherData[i].humidPercent);
-        console.log(getWeatherData[i].windSpeed);
-        console.log(getWeatherData[i].uvIndex);    
+    for (var i=2; i <=6; i++) {
+
+        // Setting variables to correspond to IDs used in the html
+        var outputDate = "date" + i;
+        var outputIcon = "icon" + i;
+        var outputTemp = "temp" + i;
+        var outputHumid = "humid" + i;
+
+        // Setting the URL for the weather icon to be used
+        weatherIconURL = "http://openweathermap.org/img/wn/" + getWeatherData[i].weatherIcon + "@2x.png"
+
+        // Displaying all the forecasted weather content on the page
+        document.getElementById(outputDate).innerHTML = getWeatherData[i].date        
+        document.getElementById(outputIcon).setAttribute("src",weatherIconURL);
+        document.getElementById(outputIcon).setAttribute("alt","Weather Icon");
+        document.getElementById(outputTemp).innerHTML = getWeatherData[i].temperature + "&#176; F"
+        document.getElementById(outputHumid).innerHTML = getWeatherData[i].humidPercent + " %"
     }
-
-
-
-
-
 }
-
-
-
-
-
-
-
 
 
 // On button click, running an async function

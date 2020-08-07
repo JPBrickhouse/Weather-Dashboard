@@ -1,0 +1,20 @@
+
+
+#titleRow {
+    background-color: grey;
+}
+
+.container {
+    background-color: gainsboro;
+    
+    border-style: solid;
+    border-width: medium;
+}
+
+#searchButton {
+    background-color: lightblue;
+}
+
+.card-body {
+    background-color: lightblue;
+}
