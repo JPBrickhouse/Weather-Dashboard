@@ -287,6 +287,7 @@ function setCityName(cityInput) {
 }
 
 
+// This function displays the weather of the last city searched
 function lastSearchDisplayed() {
 
     // Initializes an empty array
@@ -303,23 +304,34 @@ function lastSearchDisplayed() {
     else {
         weatherArrayCurrent = JSON.parse(localStorage.getItem("weatherDataStorage"));
 
+        // Getting the length of the weatherArrayCurrent, and
+        // using it to find the lastIndex, which corresponds to
+        // the last city searched
         var arrayLength = weatherArrayCurrent.length
-
         var lastIndex = arrayLength-1;
 
+        // Initializing an empty variable
         var cityOutput = "";
         
+        // Going through the weatherArrayCurret at the lastIndex, which
+        // corresponds to an array of objects. Use the forEach function to
+        // go through each object and find the value corresponding to the
+        // object key of city (Obj.city). This value is stored in the cityOutput variable
         weatherArrayCurrent[lastIndex].forEach((Obj) => {
             if (Obj.city) {
                 cityOutput = Obj.city;
             }
         });
-
+        
+        // Setting the data-name attribute and
+        // Displaying the name on the page
         document.getElementById("cityOutput").setAttribute("data-name", cityOutput);
+        document.getElementById("cityOutput").innerHTML = cityOutput;
     }
 
+    // Running the display weather function
     displayWeatherData();
 }
 
-
+// Running the lastSearchDisplayed automatically when the page loads
 lastSearchDisplayed();

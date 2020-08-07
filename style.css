@@ -11,6 +11,10 @@
     border-width: medium;
 }
 
+.card {
+    margin: auto;
+}
+
 .card-body {
     background-color: lightblue;
 }
