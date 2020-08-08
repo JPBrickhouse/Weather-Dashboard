@@ -2,6 +2,10 @@
 
 ## Homework 6 Introduction
 
+Description of the Assignment
+Screenshot
+Deployed Link
+
 
 ## Overall Notes
 

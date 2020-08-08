@@ -173,6 +173,21 @@ function displayWeatherData() {
     document.getElementById("wind1").innerHTML = "Wind Speed: " + getWeatherData[1].windSpeed + " mph"
     document.getElementById("uv1").innerHTML = "UV Index: " + getWeatherData[1].uvIndex
 
+    // Setting the color visuals for the UV index based on its value
+    var currentUVindex = getWeatherData[1].uvIndex;
+    var uvIndexStyle = document.getElementById("currentUVindex")
+    if (currentUVindex >= 11) {
+        uvIndexStyle.setAttribute("class","extreme");
+    } else if (currentUVindex < 11 && currentUVindex >= 8) {
+        uvIndexStyle.setAttribute("class","veryHigh");
+    } else if (currentUVindex < 8 && currentUVindex >= 6) {
+        uvIndexStyle.setAttribute("class","high");
+    } else if (currentUVindex < 6 && currentUVindex >= 3 ) {
+        uvIndexStyle.setAttribute("class","moderate");
+    } else if (currentUVindex < 3 && currentUVindex >=0) {
+        uvIndexStyle.setAttribute("class","low");
+    }
+
     // Future Weather
     for (var i = 2; i <= 6; i++) {
 
