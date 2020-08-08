@@ -38,22 +38,22 @@
     font-weight: bold;
 }
 
-.low {
-    background-color: green;
+.low span {
+    background-color: lightgreen;
 }
 
-.moderate {
+.moderate span {
     background-color: yellow;
 }
 
-.high {
-    background-color: orange;
-}
-
-.veryHigh {
+.veryHigh span {
     background-color: red;
 }
 
-.extreme {
-    background-color: purple;
+.extreme span {
+    background-color: mediumpurple;
+}
+
+.high span {
+    background-color: orange;
 }
