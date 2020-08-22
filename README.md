@@ -1,11 +1,11 @@
-# 6-Server-Side-APIs-Weather-Dashboard
+# Weather Dashboard
 
-## Homework 6 Introduction
+## Introduction
 We were tasked with creating a web application that would display current and forecasted weather. To obtain this information, we were taksed with utilizing mutliple AJAX calls using APIs (such as OpenWeather, etc). The weather data would be saved to localStorage, and could be recalled even as further searches were performed. Numerous javascript functions were utilizing to dynamically display the content, and Bootstrap was utilized to ensure a responsive page layout.
 
 ## Deployed Application:
 ###
-[https://jpbrickhouse.github.io/6-Server-Side-APIs-Weather-Dashboard/](https://jpbrickhouse.github.io/6-Server-Side-APIs-Weather-Dashboard/)
+[https://jpbrickhouse.github.io/Weather-Dashboard/](https://jpbrickhouse.github.io/Weather-Dashboard/)
 
 ## Screenshot:
 ![WeatherAppVisual](./WheTHEr_App_Image.png)
